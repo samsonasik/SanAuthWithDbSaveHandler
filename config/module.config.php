@@ -4,17 +4,17 @@
 namespace SanAuthWithDbSaveHandler;
 
 return array(
-    
+
     //controllers services...
     'controllers' => array(
         'factories' => array(
-            'SanAuthWithDbSaveHandler\Controller\Auth' => 'SanAuthWithDbSaveHandler\Factory\Controller\AuthControllerServiceFactory'  
+            'SanAuthWithDbSaveHandler\Controller\Auth' => 'SanAuthWithDbSaveHandler\Factory\Controller\AuthControllerServiceFactory'
         ),
         'invokables' => array(
-            'SanAuthWithDbSaveHandler\Controller\Success' => 'SanAuthWithDbSaveHandler\Controller\SuccessController'   
+            'SanAuthWithDbSaveHandler\Controller\Success' => 'SanAuthWithDbSaveHandler\Controller\SuccessController'
         ),
     ),
-    
+
     //register auth services...
     'service_manager' => array(
         'factories' => array(
@@ -23,11 +23,11 @@ return array(
             'IdentityManager' => 'SanAuthWithDbSaveHandler\Factory\Storage\IdentityManagerFactory',
         ),
     ),
-    
-    //routing configuration...    
+
+    //routing configuration...
     'router' => array(
         'routes' => array(
-            
+
             'auth' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -38,7 +38,7 @@ return array(
                     ),
                 ),
             ),
-            
+
             'success' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -51,7 +51,7 @@ return array(
             ),
         ),
     ),
-    
+
     //setting up view_manager
     'view_manager' => array(
         'template_path_stack' => array(

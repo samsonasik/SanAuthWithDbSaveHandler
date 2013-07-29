@@ -11,31 +11,32 @@ class IdentityManager implements IdentityManagerInterface
         $this->authService = $authService;
     }
 
+    public function getAuthService()
+    {
+        return $this->authService;
+    }
+
     public function login($identity, $credential)
     {
-        $this->authService->getAdapter()
+        $this->getAuthService()->getAdapter()
              ->setIdentity($identity)
              ->setCredential($credential);
 
-        $result = $this->authService->authenticate();
+        $result = $this->getAuthService()->authenticate();
 
-        if (!$result->isValid()) {
-            return false;
-        }
-
-        return $this->authService->getAdapter()->getResultRowObject();
+        return $result;
     }
 
     public function logout()
     {
-        $this->authService->getStorage()->clear();
+        $this->getAuthService()->getStorage()->clear();
     }
 
     public function hasIdentity()
     {
-        $sessionId = $this->authService->getStorage()->getSessionId();
+        $sessionId = $this->getAuthService()->getStorage()->getSessionId();
 
-        return $this->authService->getStorage()
+        return $this->getAuthService()->getStorage()
                     ->getSessionManager()
                     ->getSaveHandler()
                     ->read($sessionId);
@@ -43,7 +44,7 @@ class IdentityManager implements IdentityManagerInterface
 
     public function storeIdentity(array $identity)
     {
-        $this->authService->getStorage()
+        $this->getAuthService()->getStorage()
              ->write($identity);
     }
 }

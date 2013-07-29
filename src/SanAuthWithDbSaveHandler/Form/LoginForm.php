@@ -10,9 +10,9 @@ class LoginForm extends Form
     public function __construct()
     {
         parent::__construct();
-         
+
         $this->setAttribute('method', 'post');
-        
+
         $this->add(array(
             'name' => 'username',
             'type' => 'Text',
@@ -20,7 +20,7 @@ class LoginForm extends Form
                 'label' => 'Username : '
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'password',
             'type' => 'Password',
@@ -28,7 +28,7 @@ class LoginForm extends Form
                 'label' => 'Password : '
             ),
         ));
-        
+
          $this->add(array(
             'name' => 'Loginsubmit',
             'type' => 'Submit',
@@ -37,10 +37,10 @@ class LoginForm extends Form
                 'id' => 'Loginsubmit',
             ),
         ));
-         
+
         $this->setInputFilter($this->createInputFilter());
     }
-    
+
     public function createInputFilter()
     {
         $inputFilter = new InputFilter\InputFilter();
@@ -49,7 +49,7 @@ class LoginForm extends Form
         $username = new InputFilter\Input('username');
         $username->setRequired(true);
         $inputFilter->add($username);
-        
+
         //password
         $password = new InputFilter\Input('password');
         $password->setRequired(true);
@@ -58,4 +58,3 @@ class LoginForm extends Form
         return $inputFilter;
     }
 }
-

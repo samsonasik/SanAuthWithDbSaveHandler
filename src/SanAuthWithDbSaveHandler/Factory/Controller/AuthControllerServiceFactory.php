@@ -12,7 +12,7 @@ class AuthControllerServiceFactory implements FactoryInterface
     {
         $identityManager = $serviceLocator->getServiceLocator()->get('IdentityManager');
         $controller = new AuthController($identityManager);
-        
+
         return $controller;
     }
 }

@@ -11,6 +11,7 @@ class IdentityManagerFactory implements FactoryInterface
     {
         $authService = $serviceLocator->get('AuthService');
         $identityManager = new IdentityManager($authService);
+
         return $identityManager;
     }
 }

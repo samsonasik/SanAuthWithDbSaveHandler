@@ -13,7 +13,7 @@ class AuthStorageFactory implements FactoryInterface
         $storage = new AuthStorage('my_storage_namespace');
         $storage->setServiceLocator($serviceLocator);
         $storage->setDbHandler();
-        
+
         return $storage;
     }
 }

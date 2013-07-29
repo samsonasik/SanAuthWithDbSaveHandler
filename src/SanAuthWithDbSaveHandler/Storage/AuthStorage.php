@@ -18,16 +18,16 @@ class AuthStorage extends Storage\Session
 
     public function __construct($namespace = null)
     {
-        parent::__construct($namespace); 
+        parent::__construct($namespace);
 
         $this->namespace = $namespace;
     }
-    
+
     public function setDbHandler()
     {
         $tableGateway = new TableGateway('session', $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $saveHandler = new DbTableGateway($tableGateway, new DbTableGatewayOptions());
-        
+
         //open session
         $sessionConfig = new SessionConfig();
         $saveHandler->open($sessionConfig->getOption('save_path'), $this->namespace);
@@ -53,7 +53,7 @@ class AuthStorage extends Storage\Session
     public function getSessionManager()
     {
         return $this->session->getManager();
-    } 
+    }
 
     public function getSessionId()
     {
