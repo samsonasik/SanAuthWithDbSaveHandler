@@ -3,23 +3,22 @@
 namespace SanAuthWithDbSaveHandler\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Authentication\AuthenticationService;
 use Zend\View\Model\ViewModel;
+use SanAuthWithDbSaveHandler\Storage\IdentityManagerInterface;
 
 class AuthController extends AbstractActionController
 {
-    protected $authService;
+    protected $identityManager;
     
     //we will inject authService via factory
-    public function __construct(AuthenticationService $authService)
+    public function __construct(IdentityManagerInterface $identityManager)
     {
-        $this->authService = $authService;
+        $this->identityManager = $identityManager;
     }
     
     public function indexAction()
     {
-        if ($this->authService->getStorage()->getSessionManager()->getSaveHandler()
-                 ->read($this->authService->getStorage()->getSessionId())) {
+        if ($this->identityManager->hasIdentity()) {
             //redirect to success controller...
             return $this->redirect()->toRoute('success');
         }
@@ -45,17 +44,12 @@ class AuthController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $dataform = $form->getData();
-                
-                $this->authService->getAdapter()
-                                       ->setIdentity($dataform['username'])
-                                       ->setCredential($dataform['password']);
-                $result = $this->authService->authenticate();
-                if ($result->isValid()) {
+                $identityRow = $this->identityManager->login($dataform['username'], $dataform['password']);
+
+                if ($identityRow) {
                     //authentication success
-                    $resultRow = $this->authService->getAdapter()->getResultRowObject();
-                   
-                    $this->authService->getStorage()->write(
-                         array('id'          => $resultRow->id,
+                    $this->identityManager->storeIdentity(
+                         array('id'          => $identityRow->id,
                                 'username'   => $dataform['username'],
                                 'ip_address' => $this->getRequest()->getServer('REMOTE_ADDR'),
                                 'user_agent'    => $request->getServer('HTTP_USER_AGENT'))
@@ -71,7 +65,7 @@ class AuthController extends AbstractActionController
     
     public function logoutAction()
     {
-        $this->authService->getStorage()->clear();
+        $this->identityManager->logout();
         return $this->redirect()->toRoute('auth');
     }
 }
