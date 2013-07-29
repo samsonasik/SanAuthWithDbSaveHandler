@@ -20,6 +20,7 @@ return array(
         'factories' => array(
             'AuthStorage' => 'SanAuthWithDbSaveHandler\Factory\Storage\AuthStorageFactory',
             'AuthService' => 'SanAuthWithDbSaveHandler\Factory\Storage\AuthenticationServiceFactory',
+            'IdentityManager' => 'SanAuthWithDbSaveHandler\Factory\Storage\IdentityManagerFactory',
         ),
     ),
     
